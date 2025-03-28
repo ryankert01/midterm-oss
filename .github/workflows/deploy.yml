@@ -1,6 +1,6 @@
 name: Course Data find
 
-on: 
+on:
   push:
     branches:
       - main
@@ -21,11 +21,10 @@ jobs:
       - name: Run parsing
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }} 
-        run: python main.py
+          ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
+        run: python static.py
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: course_data
-          
+          publish_dir: .
