@@ -199,6 +199,5 @@ if __name__ == "__main__":
 
         # 輸出 json 檔案
         obj = json.dumps(res, ensure_ascii=False)
-        os.mkdir("course_data")
         with open("static.json", "w") as outfile:
             outfile.write(obj)
