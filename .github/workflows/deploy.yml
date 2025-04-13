@@ -5,27 +5,35 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at 00:00 UTC
+    - cron: '0 0 * * *'  # 每天 UTC 00:00 執行
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python_version: 3.11
-      - name: install requirements.txt
+          python_version: '3.11'
+
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-      - name: Run parsing
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ACCOUNT_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
+          pip install -r requirements.txt
+
+      - name: Run static parsing
         run: python static.py
-      - name: Deploy
+
+      - name: Run API parsing
+        run: python api.py
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
