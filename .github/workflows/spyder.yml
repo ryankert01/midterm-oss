@@ -6,6 +6,7 @@ on:
       - main
   schedule:
     - cron: '0 0 * * *'  # 每天 UTC 00:00 執行
+  workflow_dispatch: {}
 
 jobs:
   build:
